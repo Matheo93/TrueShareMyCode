@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import CodeEditor from './components/CodeEditor';
 import CodeView from './components/CodeView';
-import { CodeProvider } from './components/CodeContext';  // Correct import path
+import { CodeProvider } from './components/CodeContext';
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/editor" element={<CodeEditor />} />
-                    <Route path="/code/:id" element={<CodeView />} />
+                    <Route path="/code/:id/" element={<CodeView />} />
                 </Routes>
             </Router>
         </CodeProvider>
