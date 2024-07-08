@@ -1,19 +1,19 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
+import vercel from '@vercel/storage';
 
-export const CodeContext = createContext();
-
-export const CodeProvider = ({ children }) => {
+const CodeContext = createContext();
+const CodeProvider = ({ children }) => {
     const [codes, setCodes] = useState(() => {
-        // Initialize state from local storage
-        const savedCodes = localStorage.getItem('codes');
+        // Initialize state from Vercel Storage
+        const savedCodes = vercel.get('codes');
         return savedCodes ? JSON.parse(savedCodes) : [];
     });
 
     const addCode = (code) => {
-        setCodes(prevCodes => {
+        setCodes((prevCodes) => {
             const newCodes = [...prevCodes, { ...code, id: prevCodes.length }];
             console.log('Adding code:', newCodes);
-            localStorage.setItem('codes', JSON.stringify(newCodes)); // Save to local storage
+            vercel.set('codes', JSON.stringify(newCodes)); // Save to Vercel Storage
             return newCodes;
         });
     };
@@ -28,3 +28,5 @@ export const CodeProvider = ({ children }) => {
         </CodeContext.Provider>
     );
 };
+
+export { CodeContext, CodeProvider };
