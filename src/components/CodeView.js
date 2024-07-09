@@ -1,27 +1,21 @@
-
-import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { CodeContext } from './CodeContext';
+import React from "react";
+import { useParams } from "react-router-dom";
+import { useCodeContext } from "./CodeContext";
+import { Container, Typography, Paper } from "@mui/material";
 
 const CodeView = () => {
   const { id } = useParams();
-  const codeId = Number(id);
-  const { codes } = useContext(CodeContext);
+  const { codes } = useCodeContext();
 
-  useEffect(() => {
-    console.log('Code ID:', codeId);
-    console.log('Codes array:', codes);
-  }, [codeId, codes]);
+  const currentCode = codes.find((code) => code.id === id);
 
-  const code = codes.find((c) => c.id === codeId);
-
-  if (!code) return <div>Code not found</div>;
+  if (!currentCode) return <div>Code Not Found!</div>;
 
   return (
-    <Container>
-      <Typography variant="h4">{code.title}</Typography>
-      <Paper style={{ padding: '20px', marginTop: '20px', whiteSpace: 'pre-wrap' }}>
-        {code.content}
+    <Container maxWidth="md">
+      <Typography variant="h5" gutterBottom>{currentCode.title}</Typography>
+      <Paper elevation={3} sx={{ p: 3 }}>
+        <pre>{currentCode.content}</pre>
       </Paper>
     </Container>
   );

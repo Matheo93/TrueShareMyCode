@@ -1,19 +1,26 @@
-import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { List, ListItem, ListItemText } from '@mui/material';
-import { useCodeContext } from './CodeContext'; // Import useCodeContext from the same folder
+import React from "react";
+import { Link } from "react-router-dom";
+import { List, ListItem, ListItemText } from "@mui/material";
+import { useCodeContext } from "./CodeContext";
 
 const Home = () => {
   const { codes } = useCodeContext();
 
   return (
-    <List>
-      {codes.map((code, index) => (
-        <ListItem button component={Link} to={`/code/${code.id}`} key={index}>
-          <ListItemText primary={code.title} />
-        </ListItem>
-      ))}
-    </List>
+    <Container>
+      <List>
+        {codes.map((code) => (
+          <ListItem
+            button
+            component={Link}
+            to={`/code/${code.id}`}
+            key={code.id}
+          >
+            <ListItemText primary={code.title}></ListItemText>
+          </ListItem>
+        ))}
+      </List>
+    </Container>
   );
 };
 
