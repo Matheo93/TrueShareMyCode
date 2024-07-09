@@ -1,21 +1,22 @@
+// CodeEditor.js
 import React, { useState } from "react";
 import { TextField, Button, Container } from "@mui/material";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import { useCodeContext } from "./CodeContext";
 
 const CodeEditor = () => {
   const { addCode } = useCodeContext();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (title && content) {
       const newCode = { id: uuidv4(), title, content };
-      addCode(newCode);
-      history.push(`/code/${newCode.id}`);
+      await addCode(newCode);
+      navigate(`/code/${newCode.id}`);
     }
   };
 

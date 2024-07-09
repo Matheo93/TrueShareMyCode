@@ -1,5 +1,6 @@
+// App.js
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import CodeEditor from "./components/CodeEditor";
@@ -11,11 +12,11 @@ function App() {
     <Router>
       <CodeContextProvider>
         <Header />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/editor" component={CodeEditor} />
-          <Route path="/code/:id" component={CodeView} />
-        </Switch>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/editor" element={<CodeEditor />} />
+          <Route path="/code/:id" element={<CodeView />} />
+        </Routes>
       </CodeContextProvider>
     </Router>
   );

@@ -1,4 +1,5 @@
-import { createContext, useState, useEffect } from'react';
+// CodeContext.js
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { KV } from '@vercel/kv';
 
 const kv = new KV();
@@ -11,7 +12,7 @@ export const CodeContextProvider = ({ children }) => {
   useEffect(() => {
     async function fetchCodes() {
       const data = await kv.get('codes');
-      setCodes(JSON.parse(data) || []);
+      setCodes(data ? JSON.parse(data) : []);
     }
 
     fetchCodes();
@@ -30,4 +31,4 @@ export const CodeContextProvider = ({ children }) => {
   );
 };
 
-export const useCodeContext = () => React.useContext(CodeContext);
+export const useCodeContext = () => useContext(CodeContext);
