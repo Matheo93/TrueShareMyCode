@@ -20,7 +20,7 @@ export const CodeContextProvider = ({ children }) => {
   const addCode = async (newCode) => {
     const newCodes = [...codes, newCode];
     setCodes(newCodes);
-    await kv.put('codes', JSON.stringify(newCodes));
+    await kv.set('codes', JSON.stringify(newCodes));
   };
 
   return (
