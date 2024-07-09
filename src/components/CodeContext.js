@@ -6,6 +6,10 @@ export const CodeContext = createContext();
 export const CodeContextProvider = ({ children }) => {
   const [codes, setCodes] = useState([]);
 
+  const addCode = (newCode) => {
+    setCodes([...codes, newCode]);
+  };
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -21,7 +25,7 @@ export const CodeContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <CodeContext.Provider value={{ codes }}>
+    <CodeContext.Provider value={{ codes, addCode }}>
       {children}
     </CodeContext.Provider>
   );
