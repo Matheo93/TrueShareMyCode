@@ -1,32 +1,30 @@
 import { createContext, useState, useEffect } from 'react';
-import vercel from '@vercel/storage';
+import axios from 'axios';
 
-const CodeContext = createContext();
-const CodeProvider = ({ children }) => {
-    const [codes, setCodes] = useState(() => {
-        // Initialize state from Vercel Storage
-        const savedCodes = vercel.get('codes');
-        return savedCodes ? JSON.parse(savedCodes) : [];
-    });
+export const CodeContext = createContext();
 
-    const addCode = (code) => {
-        setCodes((prevCodes) => {
-            const newCodes = [...prevCodes, { ...code, id: prevCodes.length }];
-            console.log('Adding code:', newCodes);
-            vercel.set('codes', JSON.stringify(newCodes)); // Save to Vercel Storage
-            return newCodes;
-        });
-    };
+export const CodeContextProvider = ({ children }) => {
+  const [codes, setCodes] = useState([]);
 
-    useEffect(() => {
-        console.log('Codes state updated:', codes);
-    }, [codes]);
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get('/api/codes');
+        setCodes(response.data);
+      } catch (error) {
+        console.error('Error fetching codes:', error);
+        setCodes([]);
+      }
+    }
 
-    return (
-        <CodeContext.Provider value={{ codes, addCode }}>
-            {children}
-        </CodeContext.Provider>
-    );
+    fetchData();
+  }, []);
+
+  return (
+    <CodeContext.Provider value={{ codes }}>
+      {children}
+    </CodeContext.Provider>
+  );
 };
 
-export { CodeContext, CodeProvider };
+export const useCodeContext = () => React.useContext(CodeContext);
