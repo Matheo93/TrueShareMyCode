@@ -1,6 +1,6 @@
 import React, { useState, useContext, useHistory } from 'react';
 import { TextField, Button, Container } from '@mui/material';
-import { useCodeContext } from './CodeContext'; // Import useCodeContext from the same folder
+import { useCodeContext } from './CodeContext';
 
 const CodeEditor = () => {
   const [title, setTitle] = useState('');
@@ -17,9 +17,10 @@ const CodeEditor = () => {
 
   return (
     <Container>
-      {/* ... rest of the component remains the same ... */}
+      {/* Rest of the component goes here */}
     </Container>
   );
 };
 
 export default CodeEditor;
+export { useCodeContext };
