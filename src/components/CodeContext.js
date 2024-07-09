@@ -8,12 +8,6 @@ export const CodeContext = createContext();
 export const CodeContextProvider = ({ children }) => {
   const [codes, setCodes] = useState([]);
 
-  const addCode = async (newCode) => {
-    const newCodes = [...codes, newCode];
-    setCodes(newCodes);
-    await kv.set('codes', JSON.stringify(newCodes));
-  };
-
   useEffect(() => {
     async function fetchCodes() {
       const data = await kv.get('codes');
@@ -22,6 +16,12 @@ export const CodeContextProvider = ({ children }) => {
 
     fetchCodes();
   }, []);
+
+  const addCode = async (newCode) => {
+    const newCodes = [...codes, newCode];
+    setCodes(newCodes);
+    await kv.put('codes', JSON.stringify(newCodes));
+  };
 
   return (
     <CodeContext.Provider value={{ codes, addCode }}>
