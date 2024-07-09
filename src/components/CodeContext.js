@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { createContext, useState, useEffect } from'react';
+import { getStorage, setStorage } from '@vercel/storage';
 
 export const CodeContext = createContext();
 
@@ -8,20 +8,18 @@ export const CodeContextProvider = ({ children }) => {
 
   const addCode = (newCode) => {
     setCodes([...codes, newCode]);
+    setStorage('codes', codes);
   };
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get('/api/codes');
-        setCodes(response.data);
-      } catch (error) {
-        console.error('Error fetching codes:', error);
-        setCodes([]);
+    async function fetchCodes() {
+      const storedCodes = await getStorage('codes');
+      if (storedCodes) {
+        setCodes(storedCodes);
       }
     }
 
-    fetchData();
+    fetchCodes();
   }, []);
 
   return (
