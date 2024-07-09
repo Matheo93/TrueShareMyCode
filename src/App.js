@@ -1,23 +1,23 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './components/Home';
-import CodeEditor from './components/CodeEditor';
-import CodeView from './components/CodeView';
-import { CodeContextProvider, useCodeContext } from './components/CodeContext';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./components/Home";
+import CodeEditor from "./components/CodeEditor";
+import CodeView from "./components/CodeView";
+import { CodeContextProvider } from "./components/CodeContext";
 
 function App() {
   return (
-    <CodeContextProvider>
-      <Router>
+    <Router>
+      <CodeContextProvider>
         <Header />
         <Switch>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/editor" element={<CodeEditor />} />
-          <Route path="/code/:id" element={<CodeView />} />
+          <Route exact path="/" component={Home} />
+          <Route path="/editor" component={CodeEditor} />
+          <Route path="/code/:id" component={CodeView} />
         </Switch>
-      </Router>
-    </CodeContextProvider>
+      </CodeContextProvider>
+    </Router>
   );
 }
 
